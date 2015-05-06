@@ -23,11 +23,15 @@ namespace PtPScorecard.Pages
     public sealed partial class ArchivePage : Page
     {
         Common.NavigationHelper _navigationHelper = null;
+        Windows.ApplicationModel.Resources.ResourceLoader _loader = null;
+
 
         public ArchivePage()
         {
             this.InitializeComponent();
             _navigationHelper = new Common.NavigationHelper(this);
+            _loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+
 
         }
 
@@ -41,6 +45,7 @@ namespace PtPScorecard.Pages
         string fileContents = await Common.FileHandler.ReadFromFile("PtP-SaveFile.txt");
         if (string.IsNullOrWhiteSpace(fileContents))
         {
+            string s = _loader.GetString("ArchiveFileError");
             ArchiveTextBox.Text = "File is empty or not found";
         } else {
         ArchiveTextBox.Text = fileContents;

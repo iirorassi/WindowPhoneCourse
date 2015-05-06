@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -23,6 +24,8 @@ namespace PtPScorecard.Pages
     public sealed partial class MainPage : Page
     {
         Common.NavigationHelper _navigationHelper = null;
+        Windows.ApplicationModel.Resources.ResourceLoader _loader = null;
+        private AppBarButton _pinButton = null;
 
         public MainPage()
         {
@@ -30,6 +33,7 @@ namespace PtPScorecard.Pages
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
             _navigationHelper = new Common.NavigationHelper(this);
+            _loader = new Windows.ApplicationModel.Resources.ResourceLoader();
 
         }
 
@@ -38,12 +42,52 @@ namespace PtPScorecard.Pages
             var b = sender as Button;
             if (MainPageButton1.Name.Equals(b.Name))
             {
-                // navigate to first page without passing object
+                //Navigate to MatchSetup
                 this.Frame.Navigate(typeof(Pages.MatchSetup));
             }
             else if (MainPageButton2.Name.Equals(b.Name))
             {
+                //Navigate to Archive
                 this.Frame.Navigate(typeof(Pages.ArchivePage));
+            }
+        }
+
+        private void CreateAppBarButton()
+        {
+            if (_pinButton == null)
+            {
+                _pinButton = new AppBarButton();
+                _pinButton.Label = _loader.GetString("AppBarButton_Pin");
+                _pinButton.Click += PinButton_Click;
+                _pinButton.Icon = new SymbolIcon(Symbol.Pin);
+            }
+
+            MainAppBar.PrimaryCommands.Clear();
+            MainAppBar.PrimaryCommands.Add(_pinButton);
+        }
+
+        private async void PinButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool createSecondaryTile = true;
+
+            // Find all secondary tiles
+            var secondaryTiles = await Windows.UI.StartScreen.SecondaryTile.FindAllAsync();
+            foreach (var secondaryTile in secondaryTiles)
+            {
+                // Check for existing secondary tiles
+                if (secondaryTile.TileId == "PtpTile")
+                {
+                    // Delete the secondary tile.
+                    createSecondaryTile = false;
+                }
+            }
+
+            if (createSecondaryTile)
+            {
+                string s =_loader.GetString("ApplicationName");
+                var tile = new Windows.UI.StartScreen.SecondaryTile("PtpTile",s,"PinTime:" + DateTime.Now.ToString(),new Uri("ms-appx:///Assets/ptp150.png"),Windows.UI.StartScreen.TileSize.Default);
+                tile.VisualElements.ShowNameOnSquare150x150Logo = true;
+                await tile.RequestCreateAsync();
             }
         }
 
@@ -54,13 +98,14 @@ namespace PtPScorecard.Pages
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // TODO: Prepare page for display here.
+            CreateAppBarButton();
+        }
 
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
+        private async void About_Click(object sender, RoutedEventArgs e)
+        {
+            string aboutinfo = _loader.GetString("AboutInfo");
+            MessageDialog msgbox = new MessageDialog(aboutinfo);
+            await msgbox.ShowAsync();
         }
     }
 }

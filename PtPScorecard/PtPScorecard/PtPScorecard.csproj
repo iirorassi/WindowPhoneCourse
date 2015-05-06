@@ -116,6 +116,7 @@
   <ItemGroup>
     <Content Include="Assets\Logo.scale-240.png" />
     <Content Include="Assets\ptp-Splash.png" />
+    <Content Include="Assets\ptp044.png" />
     <Content Include="Assets\ptp071.png" />
     <Content Include="Assets\ptp150.png" />
     <Content Include="Assets\ptp555.png" />

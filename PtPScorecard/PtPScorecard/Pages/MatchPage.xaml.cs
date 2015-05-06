@@ -26,6 +26,7 @@ namespace PtPScorecard.Pages
     public sealed partial class MatchPage : Page
     {
         Common.NavigationHelper _navigationHelper = null;
+        Windows.ApplicationModel.Resources.ResourceLoader _loader = null;
         private ViewModel.MatchViewModel _MatchViewModel = null;
         private AppBarButton _finishButton = null;
         private int _noOfRounds = 10;
@@ -40,9 +41,10 @@ namespace PtPScorecard.Pages
         public MatchPage()
         {
             this.InitializeComponent();
-
-            _navigationHelper = new Common.NavigationHelper(this);
             Loaded += MatchPage_Loaded;
+            _navigationHelper = new Common.NavigationHelper(this);
+            _loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+
 
         }
 
@@ -63,7 +65,8 @@ namespace PtPScorecard.Pages
             if (_finishButton == null)
             {
                 _finishButton = new AppBarButton();
-                _finishButton.Label = "Finish match";
+                string s = _loader.GetString("MatchPage_FinishButton");
+                _finishButton.Label = s;
                 _finishButton.Click += FinishButton_Click;
                 _finishButton.Icon = new SymbolIcon(Symbol.Flag);
             }
@@ -116,25 +119,56 @@ namespace PtPScorecard.Pages
                 _winnerName = WinnerName;
 
                 //Show MessageBox
-                MessageDialog msgbox = new MessageDialog("Winner is " + WinnerName + " with score " + WinnerScore + "!");
-                msgbox.Commands.Add(new UICommand("Save",new UICommandInvokedHandler(this.CommandInvokedHandler_Save)));
-                msgbox.Commands.Add(new UICommand("Exit", new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
+                string s = _loader.GetString("MatchPage_MessageDialogWinner");
+                string msg = String.Format(s, WinnerName, WinnerScore);
+                string save = _loader.GetString("Save");
+                string exit = _loader.GetString("Exit");
+
+                MessageDialog msgbox = new MessageDialog(msg);
+                msgbox.Commands.Add(new UICommand(save,new UICommandInvokedHandler(this.CommandInvokedHandler_SaveSelect)));
+                msgbox.Commands.Add(new UICommand(exit, new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
 
                 await msgbox.ShowAsync();
 
             } else {
-                MessageDialog msgbox = new  MessageDialog("Match was a tie, no winners :(");
-                msgbox.Commands.Add(new UICommand("Save", new UICommandInvokedHandler(this.CommandInvokedHandler_Save)));
-                msgbox.Commands.Add(new UICommand("Exit", new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
+                string s = _loader.GetString("MatchPage_MessageDialogTie");
+                string save = _loader.GetString("Save");
+                string exit = _loader.GetString("Exit");
+
+                MessageDialog msgbox = new  MessageDialog(s);
+                msgbox.Commands.Add(new UICommand(save, new UICommandInvokedHandler(this.CommandInvokedHandler_SaveSelect)));
+                msgbox.Commands.Add(new UICommand(exit, new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
                 await msgbox.ShowAsync();
             }
       
         }
         //Handling of MessageDialog Commands
+
+        private async void CommandInvokedHandler_SaveSelect(IUICommand command)
+        {
+            string s = _loader.GetString("MatchPage_MessageDialogChooseSave");
+            string od = _loader.GetString("SaveToOnedrive");
+            string loc = _loader.GetString("SaveLocally");
+
+            MessageDialog msgbox = new MessageDialog(s);
+            msgbox.Commands.Add(new UICommand(od, new UICommandInvokedHandler(this.CommandInvokedHandler_Save)));
+            msgbox.Commands.Add(new UICommand(loc, new UICommandInvokedHandler(this.CommandInvokedHandler_Save)));
+
+            await msgbox.ShowAsync();
+        }
         private void CommandInvokedHandler_Save(IUICommand command)
         {
-            _MatchViewModel.SaveMatch(_matchSetup, _winnerName);
-            SaveSuccessful();
+            string od = _loader.GetString("SaveToOnedrive");
+            switch (command.Label == od) { 
+                case true:
+                    // _MatchViewModel.SaveMatchToTarget(_matchSetup, _winnerName, "onedrive");
+                    SaveUnavailable();
+                    break;
+                default:
+                   _MatchViewModel.SaveMatchToTarget(_matchSetup, _winnerName, "locally");
+                   SaveSuccessful();
+                    break;
+        }
         }
 
         private void CommandInvokedHandler_Exit(IUICommand command)
@@ -143,10 +177,23 @@ namespace PtPScorecard.Pages
             this.Frame.Navigate(typeof(Pages.MainPage));
         }
 
+        private async void SaveUnavailable()
+        {
+            string loc = _loader.GetString("SaveLocally");
+            string oddown = _loader.GetString("OdDown");
+            string exit = _loader.GetString("Exit");
+            MessageDialog msgbox = new MessageDialog(oddown);
+            msgbox.Commands.Add(new UICommand(loc, new UICommandInvokedHandler(this.CommandInvokedHandler_Save)));
+            msgbox.Commands.Add(new UICommand(exit, new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
+            await msgbox.ShowAsync();
+        }
+
         private async void SaveSuccessful()
         {
-            MessageDialog msgbox = new MessageDialog("Match Saved!");
-            msgbox.Commands.Add(new UICommand("Exit", new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
+            string saved = _loader.GetString("Saved");
+            string exit = _loader.GetString("Exit");
+            MessageDialog msgbox = new MessageDialog(saved);
+            msgbox.Commands.Add(new UICommand(exit, new UICommandInvokedHandler(this.CommandInvokedHandler_Exit)));
             await msgbox.ShowAsync();
         }
 
@@ -373,7 +420,9 @@ namespace PtPScorecard.Pages
                 }
                 else
                 {
-                    MatchTextBoxInputScore.Text = "Invalid input";
+                    string s = _loader.GetString("Invalid");
+
+                    MatchTextBoxInputScore.Text = s;
                 }
             }
         }

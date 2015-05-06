@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ApplicationDesc" xml:space="preserve">
+    <value>Heitä sikaa tuloskortti</value>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>HS tuloskortti</value>
+  </data>
+  <data name="ArchiveFileError" xml:space="preserve">
+    <value>Tiedostoa ei löytynyt tai se on tyhjä</value>
+  </data>
   <data name="ArchiveTitle.Text" xml:space="preserve">
     <value>Otteluarkisto</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Poistu</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Tieto virheellinen</value>
   </data>
   <data name="MainPageButton1.Content" xml:space="preserve">
     <value>Uusi ottelu</value>
@@ -129,11 +144,38 @@
   <data name="MatchButtonSubmit.Content" xml:space="preserve">
     <value>Hyväksy</value>
   </data>
+  <data name="MatchPage_FinishButton" xml:space="preserve">
+    <value>Päätä ottelu</value>
+  </data>
+  <data name="MatchPage_MessageDialogChooseSave" xml:space="preserve">
+    <value>Valitse kohde</value>
+  </data>
+  <data name="MatchPage_MessageDialogTie" xml:space="preserve">
+    <value>Ottelu on tasapeli, ei voittajia!</value>
+  </data>
+  <data name="MatchPage_MessageDialogWinner" xml:space="preserve">
+    <value>Ottelun voitti {0} tuloksella {1}!</value>
+  </data>
   <data name="MatchTextBlockInfo.Text" xml:space="preserve">
     <value>Ei tietoja....</value>
   </data>
   <data name="MatchTextBoxInputScore.PlaceholderText" xml:space="preserve">
     <value>Syötä tulos</value>
+  </data>
+  <data name="OdDown" xml:space="preserve">
+    <value>Onedrive ei ole käytettävissä</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Tallenna</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Ottelu tallennettu!</value>
+  </data>
+  <data name="SaveLocally" xml:space="preserve">
+    <value>Tallenna paikallisesti</value>
+  </data>
+  <data name="SaveToOnedrive" xml:space="preserve">
+    <value>Tallenna Onedriveen</value>
   </data>
   <data name="SetupButtonStart.Content" xml:space="preserve">
     <value>Aloita ottelu</value>
@@ -161,5 +203,14 @@
   </data>
   <data name="TitleText.Text" xml:space="preserve">
     <value>Heitä sikaa tuloskortti</value>
+  </data>
+  <data name="AboutInfo" xml:space="preserve">
+    <value>Tämä sovellus on tehty osana Windows Phone Application Development -kurssia Metropoliassa 2015 -Iiro Rassi</value>
+  </data>
+  <data name="AppBarButton_About.Label" xml:space="preserve">
+    <value>Tietoa</value>
+  </data>
+  <data name="AppBarButton_Pin" xml:space="preserve">
+    <value>Kiinnitä</value>
   </data>
 </root>

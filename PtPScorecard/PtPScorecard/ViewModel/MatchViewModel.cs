@@ -185,6 +185,57 @@ namespace PtPScorecard.ViewModel
 
         }
 
+        public async void SaveMatchToTarget(Match m, string Winner, string Target)
+        {
+
+            if (m != null)
+            {
+                _saveMatch = m;
+            }
+            else
+            {
+                _saveMatch = new Match();
+            }
+
+            string P1 = "";
+            foreach (Score s in P1Scores)
+            {
+                P1 = P1 + s.RoundScore + "|";
+            }
+
+            string P2 = "";
+            foreach (Score s in P2Scores)
+            {
+                P2 = P2 + s.RoundScore + "|";
+            }
+
+            string P3 = "";
+            foreach (Score s in P3Scores)
+            {
+                P3 = P3 + s.RoundScore + "|";
+            }
+
+            string P4 = "";
+            foreach (Score s in P4Scores)
+            {
+                P4 = P4 + s.RoundScore + "|";
+            }
+
+            string text = _saveMatch.TimeStamp + "\n" + _saveMatch.OtherInfo + "\n--------------------\n" + _saveMatch.P1Name + ": " + P1
+                + "\n" + _saveMatch.P2Name + ": " + P2 + "\n" + _saveMatch.P3Name + ": " + P3 + "\n" + _saveMatch.P4Name + ": " + P4 + "\nWINNER: " + Winner + "\n**********************\n";
+
+            System.Diagnostics.Debug.WriteLine(text);
+            switch (Target) { 
+
+                case "onedrive":
+                    //await Common.FileHandler.WriteToOnedrive(text);
+                    break;
+                default:
+                    await Common.FileHandler.WriteToFile(text, "PtP-SaveFile.txt");
+                    break;
+            }
+        }
+
         
     }
         
