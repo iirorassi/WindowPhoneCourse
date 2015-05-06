@@ -1,0 +1,158 @@
+﻿<Page
+    x:Class="PtPScorecard.Pages.MatchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PtPScorecard.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="20,20,20,20" >
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" x:Name="MatchTextBlockTime" x:Uid="MatchTextBlockTime" Text="Timestamp" FontSize="16"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" x:Name="MatchTextBlockInfo" x:Uid="MatchTextBlockInfo"/>
+
+            </Grid>
+        </StackPanel>
+    
+        <StackPanel HorizontalAlignment="Stretch" Width="Auto" Grid.Column="0" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Name="MatchTextBlockP1" Text="Name1" Grid.Column="0" Grid.Row="0" FontSize="16" Foreground="Red" />
+
+                <TextBlock Name="MatchTextBlockP2" Text="Name2" Grid.Column="1" Grid.Row="0" FontSize="16" Foreground="Green"/>
+
+                <TextBlock Name="MatchTextBlockP3" Text="Name3" Grid.Column="2" Grid.Row="0" FontSize="16" Foreground="Blue"/>
+
+                <TextBlock Name="MatchTextBlockP4" Text="Name4" Grid.Column="3" Grid.Row="0" FontSize="16" Foreground="Yellow"/>
+            </Grid>
+        </StackPanel>
+        
+        <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Enabled" HorizontalScrollMode="Enabled" >
+            <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+                
+                    <ItemsControl Grid.Column="0" Grid.Row="1" Name="IC1" ItemsSource="{Binding P1Scores}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding RoundScore}" Tag="{Binding RoundNo}" Click="Score_Click"  HorizontalAlignment="Center" FontSize="16" Padding="-10"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                
+                    <ItemsControl Grid.Column="1" Grid.Row="1" Name="IC2" ItemsSource="{Binding P2Scores}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding RoundScore}" Tag="{Binding RoundNo}" Click="Score_Click"  HorizontalAlignment="Center" FontSize="16"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            
+                    <ItemsControl Grid.Column="2" Grid.Row="1" Name="IC3" ItemsSource="{Binding P3Scores}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding RoundScore}" Tag="{Binding RoundNo}" Click="Score_Click" HorizontalAlignment="Center" FontSize="16"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                    <ItemsControl Grid.Column="3" Grid.Row="1" Name="IC4" ItemsSource="{Binding P4Scores}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding RoundScore}" Tag="{Binding RoundNo}" Click="Score_Click" HorizontalAlignment="Center" FontSize="16"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+        </Grid>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Width="Auto" >
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Name="MatchTextBlockP1Total" Text="0" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" FontSize="16" Foreground="Red" />
+
+                <TextBlock Name="MatchTextBlockP2Total" Text="0" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="0" FontSize="16" Foreground="Green"/>
+
+                <TextBlock Name="MatchTextBlockP3Total" Text="0" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" FontSize="16" Foreground="Blue"/>
+
+                <TextBlock Name="MatchTextBlockP4Total" Text="0" HorizontalAlignment="Center" Grid.Column="3" Grid.Row="0" FontSize="16" Foreground="Yellow"/>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Name="MatchTextBlockCurrentRound" Text="1" FontSize="18" FontWeight="Bold" Foreground="White" Background="Black" IsDoubleTapEnabled="False" IsHoldingEnabled="False" IsRightTapEnabled="False" IsTapEnabled="False" />
+                <TextBox Grid.Column="1" Name="MatchTextBoxInputScore" x:Uid="MatchTextBoxInputScore" VerticalAlignment="Top" HorizontalAlignment="Left" Text="" PlaceholderText="" Width="150" InputScope="Number" />
+                <Button Grid.Column="2" Name="MatchButtonSubmit" x:Uid="MatchButtonSubmit" Content=" " Click="MatchButtonSubmit_Click"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Name="MatchAppBar">
+            <CommandBar.PrimaryCommands>
+
+            </CommandBar.PrimaryCommands>
+
+            <CommandBar.SecondaryCommands>
+                <!--<AppBarButton Name="About" Label="About" Click=" "/>-->
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+</Page>
