@@ -1,0 +1,37 @@
+Windows Phone Application Development course Spring 2015
+Project by Iiro Rassi (1403994)
+
+______ _  ______   _____                                      _ 
+| ___ \ | | ___ \ /  ___|                                    | |
+| |_/ / |_| |_/ / \ `--.  ___ ___  _ __ ___  ___ __ _ _ __ __| |
+|  __/| __|  __/   `--. \/ __/ _ \| '__/ _ \/ __/ _` | '__/ _` |
+| |   | |_| |     /\__/ / (_| (_) | | |  __/ (_| (_| | | | (_| |
+\_|    \__\_|     \____/ \___\___/|_|  \___|\___\__,_|_|  \__,_|
+                                                                
+                                                                
+This application presents a digital scorecard for players of the physical Pass the Pigs game. Users can create a scorecard with 1-4 players and desired amount of rounds and easily keep score during the gameplay. 
+When the match is finished, the winner is declared and user is given the option to save the match information to a local file. The saved matches can be viewed in the application’s Match Archive.
+
+Functionality:
+* Localization
+*	Graphics
+*	Tile
+*	Modern UI design
+*	Lifecycle handling
+*	MVVM architecture
+*	Read/write files to disk
+*	Support for different screens and themes
+
+Missing functionality:
+*	Cloud storage
+
+Future functionality:
+*	Improved internal logic, with less code
+*	Flexible output data types
+*	Graphical interface for score keeping
+*	Game mechanics
+*	Player profiles
+	-	local
+	-	online
+	-	social
+
